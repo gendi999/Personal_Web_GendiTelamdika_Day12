@@ -1,0 +1,115 @@
+<html>
+  <head>
+    <title>gendi</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+ 
+  </head>
+  <body>
+    <!-- NavBar -->
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+      <div class="container">
+        <a class="navbar-brand" href="/">
+          <img src="public/images/logo.png" id="image" />
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto">
+            <li class="nav-item">
+                <a href="/" class="nav-link active" aria-current="page">Home</a>
+            </li>
+            {{if .Data.IsLogin}}
+            <li class="nav-item">
+                <a href="/blog" class="nav-link">Add Project</a>
+            </li>
+            {{else}}
+            {{end}}
+        </ul>
+        <ul class="navbar-nav me-3">
+            {{if .Data.IsLogin}}
+            <li class="nav-item">
+                <a href="#" class="nav-link">Hello, {{.Data.Username}}</a>
+            </li>
+            <li class="nav-item">
+                <a href="/logout" class="nav-link active">Logout</a>
+            </li>
+            {{else}}
+            <li class="nav-item">
+                <a href="/register" class="nav-link">Register</a>
+            </li>
+            <li class="nav-item">
+                <a href="/login" class="nav-link">Login</a>
+            </li>
+            {{end}}
+        </ul>
+          <div class="d-flex justify-content-end">
+              <a class="btn btn-dark btn-submit" type="button" href="/contact">Contact</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Blog -->
+    <!-- Form -->
+    <div class="container ">
+      <h3 class="text-center mt-5 " style="width: 50vw;">Creating Blog Post</h3>
+      <form action="/updateBlog/{{ .Bloger.ID }}"  enctype="multipart/form-data" method="post">
+          <div class="mb-3">
+              <label for="input-blog-title" class="form-label">Project Name</label>
+              <input name="projectname" type="text" class="form-control" id="input-blog-title" value="{{ .Bloger.Projectname }}" >
+          </div>
+          <div class="row mb-3">
+            <div class="col">
+              <label for="sdate">Star Date</label>
+              <input name="sdate" type="date" class="form-control" id="sdate" aria-describedby="sdate" value="{{ .Bloger.Sdate }}">
+            </div>
+            <div class="col">
+              <label for="input-blog-akhir">End Date</label>
+              <input name="edate" type="date" class="form-control" id="edate"  value="{{ .Bloger.Edate }}">
+            </div>
+            </div>
+          <div class="mb-3">
+              <label for="content" class="form-label">Description</label>
+              <textarea name="description" class="form-control" id="content" style="height: 100px; resize: none">{{ .Bloger.Description }}</textarea>
+          </div>
+          <label for="input-teknologi">teknologi</label>
+          <div class="form-group">
+            <div>
+              <input  type="checkbox" id="nodejs" value="nodejs" style="width: 30px;" name="technologies"{{ range $index, $data := .Bloger.Technologies }}{{ if (eq $data "nodejs" ) }} checked {{end}}{{end}}>
+              <label for="checkbox1">Node.js</label>
+              <i class="fa-brands fa-java"></i>
+          </div>
+            <div class="styled-checkbox">
+              <input name="technologies"{{ range $index, $data := .Bloger.Technologies }}{{ if (eq $data "reactjs" ) }} checked {{end}}{{end}} type="checkbox" id="reactjs" value="reactjs" style="width: 30px;">
+              <label for="checkbox2">React.js</label>
+              <i class="fa-brands fa-java"></i>
+            </div>
+       </div>
+          <div class="styled-checkbox">
+            <input name="technologies"{{ range $index, $data := .Bloger.Technologies }}{{ if (eq $data "nextjs" ) }} checked {{end}}{{end}} type="checkbox" id="nextjs" value="nextjs" style="width: 30px;">
+            <label for="checkbox3">Next.js</label>
+            <i class="fa-brands fa-java"></i>
+          </div>
+          <div class="styled-checkbox">
+            <input name="technologies"{{ range $index, $data := .Bloger.Technologies }}{{ if (eq $data "javascript" ) }} checked {{end}}{{end}} type="checkbox" id="javascript" value="javascript" style="width: 30px;">
+            <label for="checkbox4">javascript</label>
+            <i class="fa-brands fa-java"></i>
+          </div>
+          
+          <div class="mb-3">
+              <label class="form-label" for="inputGroupFile01">Upload</label>
+              <input name="image" type="file" class="form-control" id="inputGroupFile01">
+            </div>
+          <div class="d-flex justify-content-end mt-5">
+            <button type="submit" class="btn btn-dark">Submit</button>
+          </div>
+        </div>
+      </div>
+  </form>
+</div>
+</body>
+</html>
